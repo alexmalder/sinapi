@@ -8,8 +8,8 @@
 		<version>3.1.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.bezkoder</groupId>
-	<artifactId>spring-boot-jpa-postgresql</artifactId>
+	<groupId>com.vnmntn</groupId>
+	<artifactId>sinapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-boot-jpa-postgresql</name>
 	<description>Spring Boot, PostgreSQL example with Maven, Spring JPA</description>

@@ -4,7 +4,7 @@ plugins {
 	id 'java'
 }
 
-group = 'com.example'
+group = 'com.vnmntn.sinapi'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
@@ -17,7 +17,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	// end::actuator[]
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-  implementation 'org.postgresql:postgresql:42.1.4'
+	implementation 'org.postgresql:postgresql:42.1.4'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 		
 	// tag::tests[]
@@ -26,5 +26,5 @@ dependencies {
 }
 
 test {
-	useJUnitPlatform()
+  useJUnitPlatform()
 }
