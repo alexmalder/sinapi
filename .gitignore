@@ -32,4 +32,4 @@ build/
 /gradle
 .vscode/
 /gradlew
-/.gradle
+.gradle
