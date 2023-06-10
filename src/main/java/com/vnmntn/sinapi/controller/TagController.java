@@ -48,7 +48,7 @@ public class TagController {
         return new ResponseEntity<>(tags, HttpStatus.OK);
     }
 
-    @GetMapping("/tags")
+    @GetMapping("/tag")
     public ResponseEntity<Tag> getTagsById(@RequestParam(value = "id") Long id) {
         Tag tag = tagRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found Tag with id = " + id));
@@ -56,7 +56,7 @@ public class TagController {
         return new ResponseEntity<>(tag, HttpStatus.OK);
     }
 
-    @GetMapping("/tags/tutorials")
+    @GetMapping("/tutorials/tags")
     public ResponseEntity<List<Tutorial>> getAllTutorialsByTagId(@RequestParam(value = "tagId") Long tagId) {
         if (!tagRepository.existsById(tagId)) {
             throw new ResourceNotFoundException("Not found Tag  with id = " + tagId);
@@ -66,8 +66,8 @@ public class TagController {
         return new ResponseEntity<>(tutorials, HttpStatus.OK);
     }
 
-    @PostMapping("/tutorials/{tutorialId}/tags")
-    public ResponseEntity<Tag> addTag(@PathVariable(value = "tutorialId") Long tutorialId, @RequestBody Tag tagRequest) {
+    @PostMapping("/tutorials/tags")
+    public ResponseEntity<Tag> addTag(@RequestParam(value = "tutorialId") Long tutorialId, @RequestBody Tag tagRequest) {
         Tag tag = tutorialRepository.findById(tutorialId).map(tutorial -> {
             long tagId = tagRequest.getId();
 
@@ -88,8 +88,8 @@ public class TagController {
         return new ResponseEntity<>(tag, HttpStatus.CREATED);
     }
 
-    @PutMapping("/tags/{id}")
-    public ResponseEntity<Tag> updateTag(@PathVariable("id") long id, @RequestBody Tag tagRequest) {
+    @PutMapping("/tags")
+    public ResponseEntity<Tag> updateTag(@RequestParam("id") long id, @RequestBody Tag tagRequest) {
         Tag tag = tagRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("TagId " + id + "not found"));
 
@@ -98,8 +98,8 @@ public class TagController {
         return new ResponseEntity<>(tagRepository.save(tag), HttpStatus.OK);
     }
 
-    @DeleteMapping("/tutorials/{tutorialId}/tags/{tagId}")
-    public ResponseEntity<HttpStatus> deleteTagFromTutorial(@PathVariable(value = "tutorialId") Long tutorialId, @PathVariable(value = "tagId") Long tagId) {
+    @DeleteMapping("/tutorials/tags")
+    public ResponseEntity<HttpStatus> deleteTagFromTutorial(@RequestParam(value = "tutorialId") Long tutorialId, @RequestParam(value = "tagId") Long tagId) {
         Tutorial tutorial = tutorialRepository.findById(tutorialId)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found Tutorial with id = " + tutorialId));
 
@@ -109,8 +109,8 @@ public class TagController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/tags/{id}")
-    public ResponseEntity<HttpStatus> deleteTag(@PathVariable("id") long id) {
+    @DeleteMapping("/tags")
+    public ResponseEntity<HttpStatus> deleteTag(@RequestParam("id") long id) {
         tagRepository.deleteById(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

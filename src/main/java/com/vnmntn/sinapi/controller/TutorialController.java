@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.sentry.Sentry;
+//import io.sentry.Sentry;
 
 import com.vnmntn.sinapi.exception.ResourceNotFoundException;
 import com.vnmntn.sinapi.model.Tutorial;
