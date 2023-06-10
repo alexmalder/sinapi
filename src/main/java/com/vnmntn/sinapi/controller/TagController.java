@@ -28,9 +28,8 @@ public class TagController {
 
     @GetMapping("/tags")
     public ResponseEntity<List<Tag>> getAllTags() {
-        List<Tag> tags = new ArrayList<Tag>();
 
-        tagRepository.findAll().forEach(tags::add);
+        List<Tag> tags = new ArrayList<Tag>(tagRepository.findAll());
 
         if (tags.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

@@ -38,9 +38,9 @@ public class TutorialController {
 		List<Tutorial> tutorials = new ArrayList<Tutorial>();
 
 		if (title == null)
-			tutorialRepository.findAll().forEach(tutorials::add);
+			tutorials.addAll(tutorialRepository.findAll());
 		else
-			tutorialRepository.findByTitleContaining(title).forEach(tutorials::add);
+			tutorials.addAll(tutorialRepository.findByTitleContaining(title));
 
 		if (tutorials.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
