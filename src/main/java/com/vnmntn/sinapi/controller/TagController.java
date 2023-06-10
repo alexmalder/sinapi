@@ -38,8 +38,8 @@ public class TagController {
         return new ResponseEntity<>(tags, HttpStatus.OK);
     }
 
-    @GetMapping("/tutorials/{tutorialId}/tags")
-    public ResponseEntity<List<Tag>> getAllTagsByTutorialId(@PathVariable(value = "tutorialId") Long tutorialId) {
+    @GetMapping("/tags/tutorials")
+    public ResponseEntity<List<Tag>> getAllTagsByTutorialId(@RequestParam(value = "tutorialId") Long tutorialId) {
         if (!tutorialRepository.existsById(tutorialId)) {
             throw new ResourceNotFoundException("Not found Tutorial with id = " + tutorialId);
         }
@@ -48,16 +48,16 @@ public class TagController {
         return new ResponseEntity<>(tags, HttpStatus.OK);
     }
 
-    @GetMapping("/tags/{id}")
-    public ResponseEntity<Tag> getTagsById(@PathVariable(value = "id") Long id) {
+    @GetMapping("/tags")
+    public ResponseEntity<Tag> getTagsById(@RequestParam(value = "id") Long id) {
         Tag tag = tagRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found Tag with id = " + id));
 
         return new ResponseEntity<>(tag, HttpStatus.OK);
     }
 
-    @GetMapping("/tags/{tagId}/tutorials")
-    public ResponseEntity<List<Tutorial>> getAllTutorialsByTagId(@PathVariable(value = "tagId") Long tagId) {
+    @GetMapping("/tags/tutorials")
+    public ResponseEntity<List<Tutorial>> getAllTutorialsByTagId(@RequestParam(value = "tagId") Long tagId) {
         if (!tagRepository.existsById(tagId)) {
             throw new ResourceNotFoundException("Not found Tag  with id = " + tagId);
         }
