@@ -1,42 +1,39 @@
 package com.vnmntn.sinapi.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "tutorials")
-public class Tutorial {
+@Table
+public class Sin {
 
   @Id
+  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
-  @Column(name = "title")
+  @Column
   private String title;
 
-  @Column(name = "description")
+  @Column
   private String description;
 
-  @Column(name = "published")
+  @Column
   private boolean published;
 
-  @ManyToMany(fetch = FetchType.LAZY,
-          cascade = {
-                  CascadeType.PERSIST,
-                  CascadeType.MERGE
-          })
-  @JoinTable(name = "tutorial_tags",
-          joinColumns = { @JoinColumn(name = "tutorial_id") },
-          inverseJoinColumns = { @JoinColumn(name = "tag_id") })
-  private Set<Tag> tags = new HashSet<>();
+  @ManyToMany(mappedBy = "sins")
+  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+  private Set<Tag> tags;
 
-  public Tutorial() {
+  public Sin() {
 
   }
 
-  public Tutorial(String title, String description, boolean published) {
+  public Sin(String title, String description, boolean published) {
     this.title = title;
     this.description = description;
     this.published = published;
@@ -46,15 +43,19 @@ public class Tutorial {
 
   public void addTag(Tag tag) {
     this.tags.add(tag);
-    tag.getTutorials().add(this);
+    tag.getSins().add(this);
   }
 
   public void removeTag(long tagId) {
     Tag tag = this.tags.stream().filter(t -> t.getId() == tagId).findFirst().orElse(null);
     if (tag != null) {
       this.tags.remove(tag);
-      tag.getTutorials().remove(this);
+      tag.getSins().remove(this);
     }
+  }
+
+  public long getId() {
+    return id;
   }
 
   public void setTitle(String title) {

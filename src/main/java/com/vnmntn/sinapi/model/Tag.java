@@ -6,26 +6,28 @@ import java.util.Set;
 import jakarta.persistence.*; // for Spring Boot 3
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-@Table(name = "tags")
+@Table
 public class Tag {
 
     @Id
+    //@JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "name")
+    @Column
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            },
-            mappedBy = "tags")
+    @ManyToMany
+    @JoinTable(
+            name = "sin_tag",
+            joinColumns = @JoinColumn(name = "tag_id"),
+            inverseJoinColumns = @JoinColumn(name = "sin_id"))
     @JsonIgnore
-    private Set<Tutorial> tutorials = new HashSet<>();
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Set<Sin> sins;
 
     public Tag() {
 
@@ -47,11 +49,11 @@ public class Tag {
         this.name = name;
     }
 
-    public Set<Tutorial> getTutorials() {
-        return tutorials;
+    public Set<Sin> getSins() {
+        return sins;
     }
 
-    public void setTutorials(Set<Tutorial> tutorials) {
-        this.tutorials = tutorials;
+    public void setSins(Set<Sin> sins) {
+        this.sins = sins;
     }
 }
