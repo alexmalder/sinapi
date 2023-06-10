@@ -66,6 +66,12 @@ public class TagController {
         return new ResponseEntity<>(tutorials, HttpStatus.OK);
     }
 
+    @PostMapping("/tags")
+    public ResponseEntity<Tag> createTag(@RequestBody Tag tag) {
+        Tag _tag = tagRepository.save(new Tag(tag.getName()));
+        return new ResponseEntity<>(_tag, HttpStatus.CREATED);
+    }
+
     @PostMapping("/tutorials/tags")
     public ResponseEntity<Tag> addTag(@RequestParam(value = "tutorialId") Long tutorialId, @RequestBody Tag tagRequest) {
         Tag tag = tutorialRepository.findById(tutorialId).map(tutorial -> {

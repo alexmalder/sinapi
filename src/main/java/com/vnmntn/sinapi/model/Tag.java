@@ -31,6 +31,10 @@ public class Tag {
 
     }
 
+    public Tag(String name) {
+        this.name = name;
+    }
+
     public long getId() {
         return id;
     }
