@@ -1,0 +1,33 @@
+---
+
+- name: Include variables
+  gather_facts: false
+  hosts: 127.0.0.1
+  connection: local
+  tasks:
+    - name: Register postgres_password
+      ansible.builtin.command: "pass show ansible/postgres/sinapi"
+      register: postgres_password
+
+    - name: Add host variables
+      ansible.builtin.add_host:
+        name: SECRET
+        postgres_password: "{{ postgres_password.stdout }}"
+      tags:
+        - docker
+
+- hosts: cloud0
+  tasks:
+    - name: Git checkout
+      ansible.builtin.git:
+        repo: 'https://github.com/alexmalder/sinapi'
+        dest: "{{ ansible_env.HOME }}/sinapi"
+        version: master
+        force: yes
+
+    - name: Build with gradle
+      ansible.builtin.command: 
+        chdir: "{{ ansible_env.HOME }}/sinapi"
+        cmd: gradle build
+      environment:
+        POSTGRES_PASSWORD: "{{ hostvars['SECRET']['postgres_password'] }}"
