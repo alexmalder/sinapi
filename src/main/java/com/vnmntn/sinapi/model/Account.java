@@ -26,11 +26,6 @@ public class Account {
     @Column
     private String password;
 
-    @OneToMany(mappedBy = "account")
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Set<Proof> proofs;
-
-
     public Account() {
 
     }

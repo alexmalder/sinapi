@@ -25,10 +25,6 @@ public class Sin {
   @Column
   private boolean published;
 
-  @OneToMany(mappedBy = "sin")
-  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-  private Set<Proof> proofs;
-
   public Sin() {
 
   }
@@ -67,4 +63,5 @@ public class Sin {
   public boolean isPublished() {
     return published;
   }
+
 }
