@@ -9,6 +9,6 @@ import com.vnmntn.sinapi.model.Sin;
 
 public interface ProofRepository extends JpaRepository<Proof, Long> {
 
-    public List<Proof> findProofsByTagsId(Long tagId);
+    List<Proof> findProofsByTagsId(Long tagId);
     List<Proof> findByTitleContaining(String title);
 }

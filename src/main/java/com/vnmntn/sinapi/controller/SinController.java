@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 //import io.sentry.Sentry;
 
 import com.vnmntn.sinapi.exception.ResourceNotFoundException;
+import com.vnmntn.sinapi.model.Proof;
 import com.vnmntn.sinapi.model.Sin;
 import com.vnmntn.sinapi.repository.SinRepository;
 
@@ -33,13 +33,27 @@ public class SinController {
 	SinRepository sinRepository;
 
 	@GetMapping("/sins")
-	public ResponseEntity<List<Sin>> getAllSins(@RequestParam(required = false) String title) {
-		List<Sin> sins = new ArrayList<Sin>();
+	public ResponseEntity<List<Sin>> getAllSins(@RequestParam(required = false) Long id, @RequestParam(required = false) String title) {
+		List<Sin> sins = new ArrayList<>();
 
-		if (title == null)
+		if (id != null) {
+			Sin sin = sinRepository.findById(id)
+					.orElseThrow(() -> new ResourceNotFoundException("Not found with id = " + id));
+			sins.add(sin);
+		} else if (title == null) {
 			sins.addAll(sinRepository.findAll());
-		else
+		} else {
 			sins.addAll(sinRepository.findByTitleContaining(title));
+		}
+		if (id != null) {
+			Sin sin = sinRepository.findById(id)
+					.orElseThrow(() -> new ResourceNotFoundException("Not found Tag with id = " + id));
+			sins.add(sin);
+		} else if (title != null) {
+			sins.addAll(sinRepository.findByTitleContaining(title));
+		} else {
+			sins.addAll(sinRepository.findAll());
+		}
 
 		if (sins.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -48,22 +62,14 @@ public class SinController {
 		return new ResponseEntity<>(sins, HttpStatus.OK);
 	}
 
-	@GetMapping("/sins/{id}")
-	public ResponseEntity<Sin> getSinById(@PathVariable("id") long id) {
-		Sin sin = sinRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Not found with id = " + id));
-
-		return new ResponseEntity<>(sin, HttpStatus.OK);
-	}
-
 	@PostMapping("/sins")
 	public ResponseEntity<Sin> createSin(@RequestBody Sin sin) {
 		Sin _sin = sinRepository.save(new Sin(sin.getTitle(), sin.getDescription(), true));
 		return new ResponseEntity<>(_sin, HttpStatus.CREATED);
 	}
 
-	@PutMapping("/sins/{id}")
-	public ResponseEntity<Sin> updateSin(@PathVariable("id") long id, @RequestBody Sin sin) {
+	@PutMapping("/sins")
+	public ResponseEntity<Sin> updateSin(@RequestParam("id") long id, @RequestBody Sin sin) {
 		Sin _sin = sinRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Not found with id = " + id));
 
@@ -74,8 +80,8 @@ public class SinController {
 		return new ResponseEntity<>(sinRepository.save(_sin), HttpStatus.OK);
 	}
 
-	@DeleteMapping("/sins/{id}")
-	public ResponseEntity<HttpStatus> deleteSin(@PathVariable("id") long id) {
+	@DeleteMapping("/sins")
+	public ResponseEntity<HttpStatus> deleteSin(@RequestParam("id") long id) {
 		sinRepository.deleteById(id);
 
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
