@@ -47,13 +47,13 @@ public class Proof {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "account_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+    //@JsonIgnore
     private Account account;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "sin_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+    //@JsonIgnore
     private Sin sin;
 
 
@@ -82,5 +82,21 @@ public class Proof {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public Sin getSin() {
+        return sin;
+    }
+
+    public void setSin(Sin sin) {
+        this.sin = sin;
     }
 }
