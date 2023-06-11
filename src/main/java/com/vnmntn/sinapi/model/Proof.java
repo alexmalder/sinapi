@@ -26,6 +26,24 @@ public class Proof {
     @Column
     private String link;
 
+    @ManyToMany(mappedBy = "proofs")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Set<Tag> tags;
+
+    public void addTag(Tag tag) {
+        this.tags.add(tag);
+        tag.getProofs().add(this);
+    }
+
+    public void removeTag(long tagId) {
+        Tag tag = this.tags.stream().filter(t -> t.getId() == tagId).findFirst().orElse(null);
+        if (tag != null) {
+            this.tags.remove(tag);
+            tag.getProofs().remove(this);
+        }
+    }
+
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "account_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

@@ -25,9 +25,7 @@ public class Sin {
   @Column
   private boolean published;
 
-  @ManyToMany(mappedBy = "sins")
-  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-  private Set<Tag> tags;
+
 
   public Sin() {
 
@@ -40,20 +38,6 @@ public class Sin {
   }
 
   // getters and setters
-
-  public void addTag(Tag tag) {
-    this.tags.add(tag);
-    tag.getSins().add(this);
-  }
-
-  public void removeTag(long tagId) {
-    Tag tag = this.tags.stream().filter(t -> t.getId() == tagId).findFirst().orElse(null);
-    if (tag != null) {
-      this.tags.remove(tag);
-      tag.getSins().remove(this);
-    }
-  }
-
   public long getId() {
     return id;
   }

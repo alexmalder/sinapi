@@ -22,17 +22,17 @@ public class Tag {
 
     @ManyToMany
     @JoinTable(
-            name = "sin_tag",
+            name = "proof_tag",
             joinColumns = @JoinColumn(name = "tag_id"),
-            inverseJoinColumns = @JoinColumn(name = "sin_id"))
+            inverseJoinColumns = @JoinColumn(name = "proof_id")
+    )
     @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Set<Sin> sins;
+    private Set<Proof> proofs;
 
     public Tag() {
 
     }
-
     public Tag(String name) {
         this.name = name;
     }
@@ -49,11 +49,11 @@ public class Tag {
         this.name = name;
     }
 
-    public Set<Sin> getSins() {
-        return sins;
+    public Set<Proof> getProofs() {
+        return proofs;
     }
 
-    public void setSins(Set<Sin> sins) {
-        this.sins = sins;
+    public void setProofs(Set<Proof> proofs) {
+        this.proofs = proofs;
     }
 }

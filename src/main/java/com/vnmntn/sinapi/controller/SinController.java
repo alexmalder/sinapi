@@ -81,13 +81,6 @@ public class SinController {
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
-	@DeleteMapping("/sins")
-	public ResponseEntity<HttpStatus> deleteAllSins() {
-		sinRepository.deleteAll();
-
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	}
-
 	@GetMapping("/sins/published")
 	public ResponseEntity<List<Sin>> findByPublished() {
 		List<Sin> sins = sinRepository.findByPublished(true);

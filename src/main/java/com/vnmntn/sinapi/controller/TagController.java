@@ -1,8 +1,10 @@
 package com.vnmntn.sinapi.controller;
 
 import com.vnmntn.sinapi.exception.ResourceNotFoundException;
+import com.vnmntn.sinapi.model.Proof;
 import com.vnmntn.sinapi.model.Tag;
 import com.vnmntn.sinapi.model.Sin;
+import com.vnmntn.sinapi.repository.ProofRepository;
 import com.vnmntn.sinapi.repository.TagRepository;
 import com.vnmntn.sinapi.repository.SinRepository;
 
@@ -21,49 +23,27 @@ import org.springframework.web.bind.annotation.*;
 public class TagController {
 
     @Autowired
-    private SinRepository sinRepository;
+    private ProofRepository proofRepository;
 
     @Autowired
     private TagRepository tagRepository;
 
     @GetMapping("/tags")
-    public ResponseEntity<List<Tag>> getAllTags() {
+    public ResponseEntity<List<Tag>> getAllTags(@RequestParam(required = false) Long id, @RequestParam(required = false) String name) {
 
-        List<Tag> tags = new ArrayList<Tag>(tagRepository.findAll());
+        List<Tag> tags = new ArrayList<>();
 
-        if (tags.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        if (id != null) {
+            Tag tag = tagRepository.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Not found Tag with id = " + id));
+            tags.add(tag);
+        } else if (name != null) {
+            tags.addAll(tagRepository.findByNameContaining(name));
+        } else {
+            tags.addAll(tagRepository.findAll());
         }
 
         return new ResponseEntity<>(tags, HttpStatus.OK);
-    }
-
-    @GetMapping("/tags/sins")
-    public ResponseEntity<List<Tag>> getAllTagsBySinId(@RequestParam(value = "sinId") Long sinId) {
-        if (!sinRepository.existsById(sinId)) {
-            throw new ResourceNotFoundException("Not found with id = " + sinId);
-        }
-
-        List<Tag> tags = tagRepository.findTagsBySinsId(sinId);
-        return new ResponseEntity<>(tags, HttpStatus.OK);
-    }
-
-    @GetMapping("/tag")
-    public ResponseEntity<Tag> getTagsById(@RequestParam(value = "id") Long id) {
-        Tag tag = tagRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Not found Tag with id = " + id));
-
-        return new ResponseEntity<>(tag, HttpStatus.OK);
-    }
-
-    @GetMapping("/sins/tags")
-    public ResponseEntity<List<Sin>> getAllSinsByTagId(@RequestParam(value = "tagId") Long tagId) {
-        if (!tagRepository.existsById(tagId)) {
-            throw new ResourceNotFoundException("Not found Tag  with id = " + tagId);
-        }
-
-        List<Sin> sins = sinRepository.findSinsByTagsId(tagId);
-        return new ResponseEntity<>(sins, HttpStatus.OK);
     }
 
     @PostMapping("/tags")
@@ -72,18 +52,7 @@ public class TagController {
         return new ResponseEntity<>(_tag, HttpStatus.CREATED);
     }
 
-    @PostMapping("/sins/tags")
-    public ResponseEntity<Tag> addTag(@RequestParam(value = "sinId") Long sinId, @RequestParam(value = "tagId") Long tagId) {
-        Tag tag = sinRepository.findById(sinId).map(sin -> {
-            Tag _tag = tagRepository.findById(tagId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Not found Tag with id = " + tagId));
-            sin.addTag(_tag);
-            sinRepository.save(sin);
-            return _tag;
-        }).orElseThrow(() -> new ResourceNotFoundException("Not found with id = " + sinId));
 
-        return new ResponseEntity<>(tag, HttpStatus.CREATED);
-    }
 
     @PutMapping("/tags")
     public ResponseEntity<Tag> updateTag(@RequestParam("id") long id, @RequestBody Tag tagRequest) {
@@ -95,16 +64,7 @@ public class TagController {
         return new ResponseEntity<>(tagRepository.save(tag), HttpStatus.OK);
     }
 
-    @DeleteMapping("/sins/tags")
-    public ResponseEntity<HttpStatus> deleteTagFromSin(@RequestParam(value = "sinId") Long sinId, @RequestParam(value = "tagId") Long tagId) {
-        Sin sin = sinRepository.findById(sinId)
-                .orElseThrow(() -> new ResourceNotFoundException("Not found with id = " + sinId));
 
-        sin.removeTag(tagId);
-        sinRepository.save(sin);
-
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
 
     @DeleteMapping("/tags")
     public ResponseEntity<HttpStatus> deleteTag(@RequestParam("id") long id) {

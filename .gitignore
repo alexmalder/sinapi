@@ -30,6 +30,6 @@ build/
 !**/src/test/**/build/
 
 /gradle
-.vscode/
+/.vscode/
 /gradlew
-.gradle
+/.gradle
