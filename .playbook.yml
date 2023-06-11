@@ -29,5 +29,6 @@
       ansible.builtin.command: 
         chdir: "{{ ansible_env.HOME }}/sinapi"
         cmd: gradle build
-      environment:
-        POSTGRES_PASSWORD: "{{ hostvars['SECRET']['postgres_password'] }}"
+
+      #environment:
+      #  POSTGRES_PASSWORD: "{{ hostvars['SECRET']['postgres_password'] }}"
