@@ -18,4 +18,3 @@ public interface AccountRepository extends JpaRepository<Account, UUID> {
     List<Account> findByUsernameContaining(String username);
 
 }
-

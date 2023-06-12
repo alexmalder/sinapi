@@ -68,7 +68,7 @@ public class AccountController {
     }
 
     @DeleteMapping("/accounts")
-    public ResponseEntity<HttpStatus> deleteSin(@RequestParam("id") UUID id) {
+    public ResponseEntity<HttpStatus> deleteAccount(@RequestParam("id") UUID id) {
         accountRepository.deleteById(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
