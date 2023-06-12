@@ -3,7 +3,10 @@ package com.vnmntn.sinapi.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "roles", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "id"),
+        @UniqueConstraint(columnNames = "name")
+})
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,8 +16,8 @@ public class Role {
     @Column(length = 20)
     private ERole name;
 
-    public Role() {
-
+    public Role(String role_admin) {
+        this.name = ERole.valueOf(role_admin);
     }
 
     public Role(ERole name) {
