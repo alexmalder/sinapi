@@ -7,6 +7,7 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -22,8 +23,8 @@ public class Account {
 
     @Id
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column
     @NotBlank
@@ -39,6 +40,7 @@ public class Account {
     @Column
     @NotBlank
     @Size(max = 120)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -60,11 +62,11 @@ public class Account {
 
     // getters and setters
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

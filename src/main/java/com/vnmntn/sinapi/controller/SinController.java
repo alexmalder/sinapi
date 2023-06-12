@@ -2,6 +2,7 @@ package com.vnmntn.sinapi.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,21 +34,12 @@ public class SinController {
 	SinRepository sinRepository;
 
 	@GetMapping("/sins")
-	public ResponseEntity<List<Sin>> getAllSins(@RequestParam(required = false) Long id, @RequestParam(required = false) String title) {
+	public ResponseEntity<List<Sin>> getAllSins(@RequestParam(required = false) UUID id, @RequestParam(required = false) String title) {
 		List<Sin> sins = new ArrayList<>();
 
 		if (id != null) {
 			Sin sin = sinRepository.findById(id)
 					.orElseThrow(() -> new ResourceNotFoundException("Not found with id = " + id));
-			sins.add(sin);
-		} else if (title == null) {
-			sins.addAll(sinRepository.findAll());
-		} else {
-			sins.addAll(sinRepository.findByTitleContaining(title));
-		}
-		if (id != null) {
-			Sin sin = sinRepository.findById(id)
-					.orElseThrow(() -> new ResourceNotFoundException("Not found Tag with id = " + id));
 			sins.add(sin);
 		} else if (title != null) {
 			sins.addAll(sinRepository.findByTitleContaining(title));
@@ -69,7 +61,7 @@ public class SinController {
 	}
 
 	@PutMapping("/sins")
-	public ResponseEntity<Sin> updateSin(@RequestParam("id") long id, @RequestBody Sin sin) {
+	public ResponseEntity<Sin> updateSin(@RequestParam("id") UUID id, @RequestBody Sin sin) {
 		Sin _sin = sinRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Not found with id = " + id));
 
@@ -81,7 +73,7 @@ public class SinController {
 	}
 
 	@DeleteMapping("/sins")
-	public ResponseEntity<HttpStatus> deleteSin(@RequestParam("id") long id) {
+	public ResponseEntity<HttpStatus> deleteSin(@RequestParam("id") UUID id) {
 		sinRepository.deleteById(id);
 
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);

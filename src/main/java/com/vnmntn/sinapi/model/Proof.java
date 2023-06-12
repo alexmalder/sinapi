@@ -8,6 +8,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import jakarta.persistence.*;
 
@@ -17,8 +18,8 @@ public class Proof {
 
     @Id
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column
     private String title;
@@ -35,7 +36,7 @@ public class Proof {
         tag.getProofs().add(this);
     }
 
-    public void removeTag(long tagId) {
+    public void removeTag(UUID tagId) {
         Tag tag = this.tags.stream().filter(t -> t.getId() == tagId).findFirst().orElse(null);
         if (tag != null) {
             this.tags.remove(tag);
@@ -68,11 +69,11 @@ public class Proof {
 
     // getters and setters
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

@@ -1,5 +1,7 @@
 package com.vnmntn.sinapi.model;
 
+import java.util.UUID;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -9,8 +11,8 @@ import jakarta.persistence.*;
 })
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
@@ -29,11 +31,11 @@ public class Role {
 
     // getters and setters
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
