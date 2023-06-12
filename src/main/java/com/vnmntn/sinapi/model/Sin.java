@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import jakarta.persistence.*;
 
@@ -13,8 +14,8 @@ public class Sin {
 
   @Id
   @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
   @Column
   private String title;
@@ -36,7 +37,7 @@ public class Sin {
   }
 
   // getters and setters
-  public long getId() {
+  public UUID getId() {
     return id;
   }
 

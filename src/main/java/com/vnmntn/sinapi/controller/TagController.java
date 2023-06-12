@@ -10,6 +10,7 @@ import com.vnmntn.sinapi.repository.SinRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,7 @@ public class TagController {
     private TagRepository tagRepository;
 
     @GetMapping("/tags")
-    public ResponseEntity<List<Tag>> getAllTags(@RequestParam(required = false) Long id, @RequestParam(required = false) String name) {
+    public ResponseEntity<List<Tag>> getAllTags(@RequestParam(required = false) UUID id, @RequestParam(required = false) String name) {
 
         List<Tag> tags = new ArrayList<>();
 
@@ -55,7 +56,7 @@ public class TagController {
 
 
     @PutMapping("/tags")
-    public ResponseEntity<Tag> updateTag(@RequestParam("id") long id, @RequestBody Tag tagRequest) {
+    public ResponseEntity<Tag> updateTag(@RequestParam("id") UUID id, @RequestBody Tag tagRequest) {
         Tag tag = tagRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("TagId " + id + "not found"));
 
@@ -67,7 +68,7 @@ public class TagController {
 
 
     @DeleteMapping("/tags")
-    public ResponseEntity<HttpStatus> deleteTag(@RequestParam("id") long id) {
+    public ResponseEntity<HttpStatus> deleteTag(@RequestParam("id") UUID id) {
         tagRepository.deleteById(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -30,7 +31,7 @@ public class RelationController {
     private TagRepository tagRepository;
 
     @GetMapping("/tags/proofs")
-    public ResponseEntity<List<Tag>> getAllTagsByProofsId(@RequestParam(value = "proofId") Long proofId) {
+    public ResponseEntity<List<Tag>> getAllTagsByProofsId(@RequestParam(value = "proofId") UUID proofId) {
         if (!proofRepository.existsById(proofId)) {
             throw new ResourceNotFoundException("Not found with id = " + proofId);
         }
@@ -40,7 +41,7 @@ public class RelationController {
     }
 
     @GetMapping("/proofs/tags")
-    public ResponseEntity<List<Proof>> getAllProofsByTagId(@RequestParam(value = "tagId") Long tagId) {
+    public ResponseEntity<List<Proof>> getAllProofsByTagId(@RequestParam(value = "tagId") UUID tagId) {
         if (!tagRepository.existsById(tagId)) {
             throw new ResourceNotFoundException("Not found Tag  with id = " + tagId);
         }
@@ -50,7 +51,7 @@ public class RelationController {
     }
 
     @PostMapping("/proofs/tags")
-    public ResponseEntity<Tag> addTag(@RequestParam(value = "proofId") Long proofId, @RequestParam(value = "tagId") Long tagId) {
+    public ResponseEntity<Tag> addTag(@RequestParam(value = "proofId") UUID proofId, @RequestParam(value = "tagId") UUID tagId) {
         Tag tag = proofRepository.findById(proofId).map(proof -> {
             Tag _tag = tagRepository.findById(tagId).orElseThrow(() -> new ResourceNotFoundException("Not found Tag with id = " + tagId));
             proof.addTag(_tag);
@@ -63,7 +64,7 @@ public class RelationController {
 
 
     @DeleteMapping("/proofs/tags")
-    public ResponseEntity<HttpStatus> deleteTagFromProof(@RequestParam(value = "proofId") Long proofId, @RequestParam(value = "tagId") Long tagId) {
+    public ResponseEntity<HttpStatus> deleteTagFromProof(@RequestParam(value = "proofId") UUID proofId, @RequestParam(value = "tagId") UUID tagId) {
         Proof proof = proofRepository.findById(proofId).orElseThrow(() -> new ResourceNotFoundException("Not found with id = " + proofId));
 
         proof.removeTag(tagId);

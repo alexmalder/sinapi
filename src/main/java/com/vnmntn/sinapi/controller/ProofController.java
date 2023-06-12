@@ -44,7 +44,7 @@ public class ProofController {
     SinRepository sinRepository;
 
     @GetMapping("/proofs")
-    public ResponseEntity<List<Proof>> getAllProofs(@RequestParam(required = false) Long id,
+    public ResponseEntity<List<Proof>> getAllProofs(@RequestParam(required = false) UUID id,
                                                     @RequestParam(required = false) String title) {
         List<Proof> proofs = new ArrayList<>();
 
@@ -62,7 +62,7 @@ public class ProofController {
     }
 
     @PostMapping("/proofs")
-    public ResponseEntity<Proof> createProof(@RequestBody Proof proof, @RequestParam("accountId") UUID accountId, @RequestParam("sinId") long sinId) {
+    public ResponseEntity<Proof> createProof(@RequestBody Proof proof, @RequestParam("accountId") UUID accountId, @RequestParam("sinId") UUID sinId) {
         Account _account = accountRepository.findById(accountId).orElseThrow(() -> new ResourceNotFoundException("Not found account with id = " + accountId));
         Sin _sin = sinRepository.findById(sinId).orElseThrow(() -> new ResourceNotFoundException("Not found sin with id = " + sinId));
 
@@ -73,7 +73,7 @@ public class ProofController {
     }
 
     @PutMapping("/proofs")
-    public ResponseEntity<Proof> updateProof(@RequestParam("id") long id, @RequestBody Proof proof) {
+    public ResponseEntity<Proof> updateProof(@RequestParam("id") UUID id, @RequestBody Proof proof) {
         Proof _proof = proofRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found with id = " + id));
 
@@ -84,7 +84,7 @@ public class ProofController {
     }
 
     @DeleteMapping("/proofs")
-    public ResponseEntity<HttpStatus> deleteProof(@RequestParam("id") long id) {
+    public ResponseEntity<HttpStatus> deleteProof(@RequestParam("id") UUID id) {
         proofRepository.deleteById(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

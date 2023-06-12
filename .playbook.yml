@@ -51,7 +51,7 @@
       ansible.builtin.git:
         repo: 'https://github.com/alexmalder/sinapi'
         dest: "{{ ansible_env.HOME }}/sinapi"
-        version: master
+        version: uuid
         force: yes
 
     - name: Build with gradle

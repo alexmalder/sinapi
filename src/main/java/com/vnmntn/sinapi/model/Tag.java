@@ -2,6 +2,7 @@ package com.vnmntn.sinapi.model;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import jakarta.persistence.*; // for Spring Boot 3
 
@@ -14,8 +15,8 @@ public class Tag {
 
     @Id
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column
     private String name;
@@ -37,7 +38,7 @@ public class Tag {
         this.name = name;
     }
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 
