@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@CrossOrigin(origins = "https://api.vnmntn.com")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api")
 public class AccountController {

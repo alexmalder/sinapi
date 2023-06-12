@@ -33,7 +33,7 @@ import com.vnmntn.sinapi.repository.AccountRepository;
 import com.vnmntn.sinapi.security.jwt.JwtUtils;
 import com.vnmntn.sinapi.security.services.UserDetailsImpl;
 
-@CrossOrigin(origins = "https://api.vnmntn.com", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {

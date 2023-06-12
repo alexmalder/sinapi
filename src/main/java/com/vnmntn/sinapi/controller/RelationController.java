@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@CrossOrigin(origins = "https://api.vnmntn.com")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/relations")
 public class RelationController {

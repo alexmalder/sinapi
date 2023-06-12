@@ -28,7 +28,7 @@ import com.vnmntn.sinapi.repository.SinRepository;
 import com.vnmntn.sinapi.repository.AccountRepository;
 
 
-@CrossOrigin(origins = "https://api.vnmntn.com")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api")
 public class ProofController {
