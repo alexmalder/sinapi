@@ -16,9 +16,9 @@ public class OpenApiConfig {
                 .addServersItem(new Server().url("https://api.vnmntn.com"))
                 .addServersItem(new Server().url("http://localhost:8080"))
                 .info(new Info()
-                        .title("Your API Title")
-                        .description("Your API Description")
-                        .version("1.0")
+                        .title("Museum")
+                        .description("Social API")
+                        .version("0.1")
                 );
     }
 }
