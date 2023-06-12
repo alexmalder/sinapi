@@ -8,10 +8,15 @@
       ansible.builtin.command: "pass show ansible/postgres/sinapi"
       register: postgres_password
 
+    - name: Register sentry_dsn
+      ansible.builtin.command: "pass show ansible/sentry/sinapi"
+      register: sentry_dsn
+
     - name: Add host variables
       ansible.builtin.add_host:
         name: SECRET
         postgres_password: "{{ postgres_password.stdout }}"
+        sentry_dsn: "{{ sentry_dsn.stdout }}"
       tags:
         - docker
 

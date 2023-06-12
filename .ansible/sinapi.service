@@ -14,6 +14,7 @@ WorkingDirectory=/var/lib/sinapi
 ExecStart=java -jar -Dspring.profiles.active=default {{ exec_file }}
 Restart=always
 Environment=POSTGRES_PASSWORD={{ hostvars['SECRET']['postgres_password'] }}
+Environment=SENTRY_DSN={{ hostvars['SECRET']['sentry_dsn'] }}
 
 [Install]
 WantedBy=multi-user.target
