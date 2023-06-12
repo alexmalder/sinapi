@@ -1,0 +1,19 @@
+[Unit]
+Description=SinAPI
+After=syslog.target
+After=network.target
+#Wants=postgresql.service
+#After=postgresql.service
+
+[Service]
+RestartSec=10s
+Type=simple
+User=sinapi
+Group=sinapi
+WorkingDirectory=/var/lib/sinapi
+ExecStart=java -jar -Dspring.profiles.active=default {{ exec_file }}
+Restart=always
+Environment=POSTGRES_PASSWORD={{ hostvars['SECRET']['postgres_password'] }}
+
+[Install]
+WantedBy=multi-user.target

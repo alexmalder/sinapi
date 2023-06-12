@@ -1,5 +1,4 @@
 ---
-
 - name: Include variables
   gather_facts: false
   hosts: 127.0.0.1
@@ -17,7 +16,32 @@
         - docker
 
 - hosts: cloud0
+  vars:
+    exec_file: /var/lib/sinapi/spring-boot-0.0.1-SNAPSHOT.jar
   tasks:
+    - name: Ensure group web exists
+      ansible.builtin.group:
+        name: web
+        state: present
+      become: yes
+
+    - name: Create user for service
+      ansible.builtin.user:
+        name: sinapi
+        groups: 
+          - web
+        append: yes
+      become: yes
+
+    - name: Create config directory
+      ansible.builtin.file:
+        path: "/var/lib/sinapi"
+        state: directory
+        mode: '0770'
+        owner: sinapi
+        group: web
+      become: yes
+
     - name: Git checkout
       ansible.builtin.git:
         repo: 'https://github.com/alexmalder/sinapi'
@@ -30,5 +54,23 @@
         chdir: "{{ ansible_env.HOME }}/sinapi"
         cmd: gradle build
 
-      #environment:
-      #  POSTGRES_PASSWORD: "{{ hostvars['SECRET']['postgres_password'] }}"
+    - name: Move jar to /var/lib/sinapi
+      copy:
+        src: "{{ ansible_env.HOME }}/sinapi/build/libs/spring-boot-0.0.1-SNAPSHOT.jar"
+        dest: "{{ exec_file }}"
+        remote_src: yes
+
+    - name: Push service
+      ansible.builtin.template:
+        src: ".ansible/sinapi.service"
+        dest: "/usr/lib/systemd/system/sinapi.service"
+        mode: '0640'
+      become: yes
+
+    - name: Setup service
+      ansible.builtin.systemd:
+        name: sinapi
+        state: restarted
+        enabled: true
+        daemon_reload: true
+      become: yes
