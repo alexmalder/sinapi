@@ -41,15 +41,6 @@ public class SinController {
 			Sin sin = sinRepository.findById(id)
 					.orElseThrow(() -> new ResourceNotFoundException("Not found with id = " + id));
 			sins.add(sin);
-		} else if (title == null) {
-			sins.addAll(sinRepository.findAll());
-		} else {
-			sins.addAll(sinRepository.findByTitleContaining(title));
-		}
-		if (id != null) {
-			Sin sin = sinRepository.findById(id)
-					.orElseThrow(() -> new ResourceNotFoundException("Not found Tag with id = " + id));
-			sins.add(sin);
 		} else if (title != null) {
 			sins.addAll(sinRepository.findByTitleContaining(title));
 		} else {
