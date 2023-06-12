@@ -3,6 +3,8 @@ package com.vnmntn.sinapi.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
 import java.util.HashSet;
 import java.util.Set;
 

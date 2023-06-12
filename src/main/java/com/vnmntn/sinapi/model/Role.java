@@ -16,6 +16,9 @@ public class Role {
     @Column(length = 20)
     private ERole name;
 
+    public Role() {
+    }
+
     public Role(String role_admin) {
         this.name = ERole.valueOf(role_admin);
     }
