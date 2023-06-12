@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.vnmntn.sinapi.model.Account;
 import com.vnmntn.sinapi.model.ERole;
 import com.vnmntn.sinapi.model.Role;
-import com.vnmntn.sinapi.model.Account;
 import com.vnmntn.sinapi.payload.request.LoginRequest;
 import com.vnmntn.sinapi.payload.request.SignupRequest;
 import com.vnmntn.sinapi.payload.response.JwtResponse;
