@@ -23,6 +23,7 @@ import com.vnmntn.sinapi.repository.SinRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 @CrossOrigin(origins = "*")
@@ -55,7 +56,7 @@ public class AccountController {
     }
 
     @PutMapping("/accounts")
-    public ResponseEntity<Account> updateAccount(@RequestParam("id") long id, @RequestBody Account account) {
+    public ResponseEntity<Account> updateAccount(@RequestParam("id") UUID id, @RequestBody Account account) {
         Account _account = accountRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found with id = " + id));
 
@@ -67,7 +68,7 @@ public class AccountController {
     }
 
     @DeleteMapping("/accounts")
-    public ResponseEntity<HttpStatus> deleteSin(@RequestParam("id") long id) {
+    public ResponseEntity<HttpStatus> deleteSin(@RequestParam("id") UUID id) {
         accountRepository.deleteById(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

@@ -3,6 +3,7 @@ package com.vnmntn.sinapi.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -61,7 +62,7 @@ public class ProofController {
     }
 
     @PostMapping("/proofs")
-    public ResponseEntity<Proof> createProof(@RequestBody Proof proof, @RequestParam("accountId") long accountId, @RequestParam("sinId") long sinId) {
+    public ResponseEntity<Proof> createProof(@RequestBody Proof proof, @RequestParam("accountId") UUID accountId, @RequestParam("sinId") long sinId) {
         Account _account = accountRepository.findById(accountId).orElseThrow(() -> new ResourceNotFoundException("Not found account with id = " + accountId));
         Sin _sin = sinRepository.findById(sinId).orElseThrow(() -> new ResourceNotFoundException("Not found sin with id = " + sinId));
 
