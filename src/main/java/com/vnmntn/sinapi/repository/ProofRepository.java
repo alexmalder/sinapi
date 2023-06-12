@@ -16,5 +16,5 @@ public interface ProofRepository extends JpaRepository<Proof, UUID> {
     List<Proof> findProofsByTagsId(UUID tagId);
     List<Proof> findByTitleContaining(String title);
 
-    Optional<List<Comment>> findCommentsByAccountId(UUID accountId);
+    Optional<List<Comment>> findCommentsById(UUID proofId);
 }

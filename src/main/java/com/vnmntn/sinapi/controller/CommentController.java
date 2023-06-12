@@ -43,16 +43,16 @@ public class CommentController {
     CommentRepository commentRepository;
 
     @GetMapping("/comments")
-    public ResponseEntity<List<Comment>> getAllSins(@RequestParam(required = false) UUID id, @RequestParam(required = false) UUID accountId) {
+    public ResponseEntity<List<Comment>> getAllSins(@RequestParam(required = false) UUID id, @RequestParam(required = false) UUID proofId) {
         List<Comment> comments = new ArrayList<>();
 
         if (id != null) {
             Comment comment = commentRepository.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException("Not found with id = " + id));
             comments.add(comment);
-        } else if (accountId != null) {
-            List<Comment> _comments = proofRepository.findCommentsByAccountId(accountId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Not found with account id = " + accountId));
+        } else if (proofId != null) {
+            List<Comment> _comments = proofRepository.findCommentsById(proofId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Not found with proof id = " + proofId));
             comments.addAll(_comments);
         } else {
             comments.addAll(commentRepository.findAll());
