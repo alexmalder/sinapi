@@ -17,7 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "https://api.vnmntn.com")
 @RestController
 @RequestMapping("/api")
 public class TagController {

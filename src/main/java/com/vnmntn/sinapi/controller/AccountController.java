@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "https://api.vnmntn.com")
 @RestController
 @RequestMapping("/api")
 public class AccountController {

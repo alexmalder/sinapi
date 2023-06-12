@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "https://api.vnmntn.com")
 @RestController
 @RequestMapping("/api/relations")
 public class RelationController {

@@ -24,7 +24,7 @@ import com.vnmntn.sinapi.model.Sin;
 import com.vnmntn.sinapi.repository.SinRepository;
 
 
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "https://api.vnmntn.com")
 @RestController
 @RequestMapping("/api")
 public class SinController {
