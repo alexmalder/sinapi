@@ -24,9 +24,11 @@ import com.vnmntn.sinapi.exception.ResourceNotFoundException;
 import com.vnmntn.sinapi.model.Account;
 import com.vnmntn.sinapi.model.Proof;
 import com.vnmntn.sinapi.model.Sin;
+import com.vnmntn.sinapi.model.Tag;
 import com.vnmntn.sinapi.repository.ProofRepository;
 import com.vnmntn.sinapi.repository.SinRepository;
 import com.vnmntn.sinapi.repository.AccountRepository;
+import com.vnmntn.sinapi.repository.TagRepository;
 
 
 @CrossOrigin(origins = "*")
@@ -42,6 +44,9 @@ public class ProofController {
 
     @Autowired
     SinRepository sinRepository;
+
+    @Autowired
+    TagRepository tagRepository;
 
     @GetMapping("/proofs")
     public ResponseEntity<List<Proof>> getAllProofs(@RequestParam(required = false) UUID id,
@@ -89,4 +94,16 @@ public class ProofController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    // get all proofs by tag id
+    @GetMapping("/proofs/tags")
+    public ResponseEntity<List<Proof>> getAllProofsByTagId(@RequestParam(value = "tagId") UUID tagId) {
+        if (!tagRepository.existsById(tagId)) {
+            throw new ResourceNotFoundException("Not found Tag  with id = " + tagId);
+        }
+
+        List<Proof> proofs = proofRepository.findProofsByTagsId(tagId);
+        return new ResponseEntity<>(proofs, HttpStatus.OK);
+    }
+
 }

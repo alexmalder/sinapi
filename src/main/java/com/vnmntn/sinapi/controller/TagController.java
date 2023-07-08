@@ -53,8 +53,6 @@ public class TagController {
         return new ResponseEntity<>(_tag, HttpStatus.CREATED);
     }
 
-
-
     @PutMapping("/tags")
     public ResponseEntity<Tag> updateTag(@RequestParam("id") UUID id, @RequestBody Tag tagRequest) {
         Tag tag = tagRepository.findById(id)
@@ -65,12 +63,45 @@ public class TagController {
         return new ResponseEntity<>(tagRepository.save(tag), HttpStatus.OK);
     }
 
-
-
     @DeleteMapping("/tags")
     public ResponseEntity<HttpStatus> deleteTag(@RequestParam("id") UUID id) {
         tagRepository.deleteById(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    // add tag for existed proof[correct]
+    @PostMapping("/tags/proofs")
+    public ResponseEntity<Tag> addTag(@RequestParam(value = "proofId") UUID proofId, @RequestParam(value = "tagId") UUID tagId) {
+        Tag tag = proofRepository.findById(proofId).map(proof -> {
+            Tag _tag = tagRepository.findById(tagId).orElseThrow(() -> new ResourceNotFoundException("Not found Tag with id = " + tagId));
+            proof.addTag(_tag);
+            proofRepository.save(proof);
+            return _tag;
+        }).orElseThrow(() -> new ResourceNotFoundException("Not found with id = " + proofId));
+
+        return new ResponseEntity<>(tag, HttpStatus.CREATED);
+    }
+
+    // delete tag from existed proof[correct]
+    @DeleteMapping("/tags/proofs")
+    public ResponseEntity<HttpStatus> deleteTagFromProof(@RequestParam(value = "proofId") UUID proofId, @RequestParam(value = "tagId") UUID tagId) {
+        Proof proof = proofRepository.findById(proofId).orElseThrow(() -> new ResourceNotFoundException("Not found with id = " + proofId));
+
+        proof.removeTag(tagId);
+        proofRepository.save(proof);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    // get all tags by proof id
+    @GetMapping("/tags/proofs")
+    public ResponseEntity<List<Tag>> getAllTagsByProofId(@RequestParam(value = "proofId") UUID proofId) {
+        if (!proofRepository.existsById(proofId)) {
+            throw new ResourceNotFoundException("Not found with id = " + proofId);
+        }
+
+        List<Tag> tags = tagRepository.findTagsByProofsId(proofId);
+        return new ResponseEntity<>(tags, HttpStatus.OK);
     }
 }
