@@ -56,11 +56,7 @@ public class Proof {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Sin sin;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "comment_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Comment comment;
+
 
 
     public Proof() {
@@ -114,11 +110,4 @@ public class Proof {
         this.sin = sin;
     }
 
-    public Comment getComment() {
-        return comment;
-    }
-
-    public void setComment(Comment comment) {
-        this.comment = comment;
-    }
 }

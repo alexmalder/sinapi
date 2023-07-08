@@ -2,6 +2,9 @@ package com.vnmntn.sinapi.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import java.util.UUID;
 
 import jakarta.persistence.*;
@@ -21,6 +24,12 @@ public class Comment {
     @Column
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Integer rating;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "proof_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Proof proof;
 
     public Comment() {
 
