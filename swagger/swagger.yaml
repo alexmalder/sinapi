@@ -1,0 +1,1405 @@
+openapi: 3.0.1
+info:
+  title: Museum
+  description: Social API
+  version: "0.1"
+servers:
+  - url: https://api.vnmntn.com
+  - url: http://localhost:8080
+paths:
+  /api/tags:
+    get:
+      tags:
+        - tag-controller
+      operationId: getAllTags
+      parameters:
+        - name: id
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tag'
+    put:
+      tags:
+        - tag-controller
+      operationId: updateTag
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tag'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Tag'
+    post:
+      tags:
+        - tag-controller
+      operationId: createTag
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tag'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Tag'
+    delete:
+      tags:
+        - tag-controller
+      operationId: deleteTag
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+                enum:
+                  - 100 CONTINUE
+                  - 101 SWITCHING_PROTOCOLS
+                  - 102 PROCESSING
+                  - 103 EARLY_HINTS
+                  - 103 CHECKPOINT
+                  - 200 OK
+                  - 201 CREATED
+                  - 202 ACCEPTED
+                  - 203 NON_AUTHORITATIVE_INFORMATION
+                  - 204 NO_CONTENT
+                  - 205 RESET_CONTENT
+                  - 206 PARTIAL_CONTENT
+                  - 207 MULTI_STATUS
+                  - 208 ALREADY_REPORTED
+                  - 226 IM_USED
+                  - 300 MULTIPLE_CHOICES
+                  - 301 MOVED_PERMANENTLY
+                  - 302 FOUND
+                  - 302 MOVED_TEMPORARILY
+                  - 303 SEE_OTHER
+                  - 304 NOT_MODIFIED
+                  - 305 USE_PROXY
+                  - 307 TEMPORARY_REDIRECT
+                  - 308 PERMANENT_REDIRECT
+                  - 400 BAD_REQUEST
+                  - 401 UNAUTHORIZED
+                  - 402 PAYMENT_REQUIRED
+                  - 403 FORBIDDEN
+                  - 404 NOT_FOUND
+                  - 405 METHOD_NOT_ALLOWED
+                  - 406 NOT_ACCEPTABLE
+                  - 407 PROXY_AUTHENTICATION_REQUIRED
+                  - 408 REQUEST_TIMEOUT
+                  - 409 CONFLICT
+                  - 410 GONE
+                  - 411 LENGTH_REQUIRED
+                  - 412 PRECONDITION_FAILED
+                  - 413 PAYLOAD_TOO_LARGE
+                  - 413 REQUEST_ENTITY_TOO_LARGE
+                  - 414 URI_TOO_LONG
+                  - 414 REQUEST_URI_TOO_LONG
+                  - 415 UNSUPPORTED_MEDIA_TYPE
+                  - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+                  - 417 EXPECTATION_FAILED
+                  - 418 I_AM_A_TEAPOT
+                  - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+                  - 420 METHOD_FAILURE
+                  - 421 DESTINATION_LOCKED
+                  - 422 UNPROCESSABLE_ENTITY
+                  - 423 LOCKED
+                  - 424 FAILED_DEPENDENCY
+                  - 425 TOO_EARLY
+                  - 426 UPGRADE_REQUIRED
+                  - 428 PRECONDITION_REQUIRED
+                  - 429 TOO_MANY_REQUESTS
+                  - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+                  - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+                  - 500 INTERNAL_SERVER_ERROR
+                  - 501 NOT_IMPLEMENTED
+                  - 502 BAD_GATEWAY
+                  - 503 SERVICE_UNAVAILABLE
+                  - 504 GATEWAY_TIMEOUT
+                  - 505 HTTP_VERSION_NOT_SUPPORTED
+                  - 506 VARIANT_ALSO_NEGOTIATES
+                  - 507 INSUFFICIENT_STORAGE
+                  - 508 LOOP_DETECTED
+                  - 509 BANDWIDTH_LIMIT_EXCEEDED
+                  - 510 NOT_EXTENDED
+                  - 511 NETWORK_AUTHENTICATION_REQUIRED
+  /api/sins:
+    get:
+      tags:
+        - sin-controller
+      operationId: getAllSins
+      parameters:
+        - name: id
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: title
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sin'
+    put:
+      tags:
+        - sin-controller
+      operationId: updateSin
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sin'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Sin'
+    post:
+      tags:
+        - sin-controller
+      operationId: createSin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sin'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Sin'
+    delete:
+      tags:
+        - sin-controller
+      operationId: deleteSin
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+                enum:
+                  - 100 CONTINUE
+                  - 101 SWITCHING_PROTOCOLS
+                  - 102 PROCESSING
+                  - 103 EARLY_HINTS
+                  - 103 CHECKPOINT
+                  - 200 OK
+                  - 201 CREATED
+                  - 202 ACCEPTED
+                  - 203 NON_AUTHORITATIVE_INFORMATION
+                  - 204 NO_CONTENT
+                  - 205 RESET_CONTENT
+                  - 206 PARTIAL_CONTENT
+                  - 207 MULTI_STATUS
+                  - 208 ALREADY_REPORTED
+                  - 226 IM_USED
+                  - 300 MULTIPLE_CHOICES
+                  - 301 MOVED_PERMANENTLY
+                  - 302 FOUND
+                  - 302 MOVED_TEMPORARILY
+                  - 303 SEE_OTHER
+                  - 304 NOT_MODIFIED
+                  - 305 USE_PROXY
+                  - 307 TEMPORARY_REDIRECT
+                  - 308 PERMANENT_REDIRECT
+                  - 400 BAD_REQUEST
+                  - 401 UNAUTHORIZED
+                  - 402 PAYMENT_REQUIRED
+                  - 403 FORBIDDEN
+                  - 404 NOT_FOUND
+                  - 405 METHOD_NOT_ALLOWED
+                  - 406 NOT_ACCEPTABLE
+                  - 407 PROXY_AUTHENTICATION_REQUIRED
+                  - 408 REQUEST_TIMEOUT
+                  - 409 CONFLICT
+                  - 410 GONE
+                  - 411 LENGTH_REQUIRED
+                  - 412 PRECONDITION_FAILED
+                  - 413 PAYLOAD_TOO_LARGE
+                  - 413 REQUEST_ENTITY_TOO_LARGE
+                  - 414 URI_TOO_LONG
+                  - 414 REQUEST_URI_TOO_LONG
+                  - 415 UNSUPPORTED_MEDIA_TYPE
+                  - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+                  - 417 EXPECTATION_FAILED
+                  - 418 I_AM_A_TEAPOT
+                  - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+                  - 420 METHOD_FAILURE
+                  - 421 DESTINATION_LOCKED
+                  - 422 UNPROCESSABLE_ENTITY
+                  - 423 LOCKED
+                  - 424 FAILED_DEPENDENCY
+                  - 425 TOO_EARLY
+                  - 426 UPGRADE_REQUIRED
+                  - 428 PRECONDITION_REQUIRED
+                  - 429 TOO_MANY_REQUESTS
+                  - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+                  - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+                  - 500 INTERNAL_SERVER_ERROR
+                  - 501 NOT_IMPLEMENTED
+                  - 502 BAD_GATEWAY
+                  - 503 SERVICE_UNAVAILABLE
+                  - 504 GATEWAY_TIMEOUT
+                  - 505 HTTP_VERSION_NOT_SUPPORTED
+                  - 506 VARIANT_ALSO_NEGOTIATES
+                  - 507 INSUFFICIENT_STORAGE
+                  - 508 LOOP_DETECTED
+                  - 509 BANDWIDTH_LIMIT_EXCEEDED
+                  - 510 NOT_EXTENDED
+                  - 511 NETWORK_AUTHENTICATION_REQUIRED
+  /api/proofs:
+    get:
+      tags:
+        - proof-controller
+      operationId: getAllProofs
+      parameters:
+        - name: id
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: title
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Proof'
+    put:
+      tags:
+        - proof-controller
+      operationId: updateProof
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Proof'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Proof'
+    post:
+      tags:
+        - proof-controller
+      operationId: createProof
+      parameters:
+        - name: accountId
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: sinId
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Proof'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Proof'
+    delete:
+      tags:
+        - proof-controller
+      operationId: deleteProof
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+                enum:
+                  - 100 CONTINUE
+                  - 101 SWITCHING_PROTOCOLS
+                  - 102 PROCESSING
+                  - 103 EARLY_HINTS
+                  - 103 CHECKPOINT
+                  - 200 OK
+                  - 201 CREATED
+                  - 202 ACCEPTED
+                  - 203 NON_AUTHORITATIVE_INFORMATION
+                  - 204 NO_CONTENT
+                  - 205 RESET_CONTENT
+                  - 206 PARTIAL_CONTENT
+                  - 207 MULTI_STATUS
+                  - 208 ALREADY_REPORTED
+                  - 226 IM_USED
+                  - 300 MULTIPLE_CHOICES
+                  - 301 MOVED_PERMANENTLY
+                  - 302 FOUND
+                  - 302 MOVED_TEMPORARILY
+                  - 303 SEE_OTHER
+                  - 304 NOT_MODIFIED
+                  - 305 USE_PROXY
+                  - 307 TEMPORARY_REDIRECT
+                  - 308 PERMANENT_REDIRECT
+                  - 400 BAD_REQUEST
+                  - 401 UNAUTHORIZED
+                  - 402 PAYMENT_REQUIRED
+                  - 403 FORBIDDEN
+                  - 404 NOT_FOUND
+                  - 405 METHOD_NOT_ALLOWED
+                  - 406 NOT_ACCEPTABLE
+                  - 407 PROXY_AUTHENTICATION_REQUIRED
+                  - 408 REQUEST_TIMEOUT
+                  - 409 CONFLICT
+                  - 410 GONE
+                  - 411 LENGTH_REQUIRED
+                  - 412 PRECONDITION_FAILED
+                  - 413 PAYLOAD_TOO_LARGE
+                  - 413 REQUEST_ENTITY_TOO_LARGE
+                  - 414 URI_TOO_LONG
+                  - 414 REQUEST_URI_TOO_LONG
+                  - 415 UNSUPPORTED_MEDIA_TYPE
+                  - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+                  - 417 EXPECTATION_FAILED
+                  - 418 I_AM_A_TEAPOT
+                  - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+                  - 420 METHOD_FAILURE
+                  - 421 DESTINATION_LOCKED
+                  - 422 UNPROCESSABLE_ENTITY
+                  - 423 LOCKED
+                  - 424 FAILED_DEPENDENCY
+                  - 425 TOO_EARLY
+                  - 426 UPGRADE_REQUIRED
+                  - 428 PRECONDITION_REQUIRED
+                  - 429 TOO_MANY_REQUESTS
+                  - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+                  - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+                  - 500 INTERNAL_SERVER_ERROR
+                  - 501 NOT_IMPLEMENTED
+                  - 502 BAD_GATEWAY
+                  - 503 SERVICE_UNAVAILABLE
+                  - 504 GATEWAY_TIMEOUT
+                  - 505 HTTP_VERSION_NOT_SUPPORTED
+                  - 506 VARIANT_ALSO_NEGOTIATES
+                  - 507 INSUFFICIENT_STORAGE
+                  - 508 LOOP_DETECTED
+                  - 509 BANDWIDTH_LIMIT_EXCEEDED
+                  - 510 NOT_EXTENDED
+                  - 511 NETWORK_AUTHENTICATION_REQUIRED
+  /api/comments:
+    get:
+      tags:
+        - comment-controller
+      operationId: getAllSins_1
+      parameters:
+        - name: id
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: proofId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+    put:
+      tags:
+        - comment-controller
+      operationId: updateSin_1
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Comment'
+    post:
+      tags:
+        - comment-controller
+      operationId: createSin_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Comment'
+    delete:
+      tags:
+        - comment-controller
+      operationId: deleteSin_1
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+                enum:
+                  - 100 CONTINUE
+                  - 101 SWITCHING_PROTOCOLS
+                  - 102 PROCESSING
+                  - 103 EARLY_HINTS
+                  - 103 CHECKPOINT
+                  - 200 OK
+                  - 201 CREATED
+                  - 202 ACCEPTED
+                  - 203 NON_AUTHORITATIVE_INFORMATION
+                  - 204 NO_CONTENT
+                  - 205 RESET_CONTENT
+                  - 206 PARTIAL_CONTENT
+                  - 207 MULTI_STATUS
+                  - 208 ALREADY_REPORTED
+                  - 226 IM_USED
+                  - 300 MULTIPLE_CHOICES
+                  - 301 MOVED_PERMANENTLY
+                  - 302 FOUND
+                  - 302 MOVED_TEMPORARILY
+                  - 303 SEE_OTHER
+                  - 304 NOT_MODIFIED
+                  - 305 USE_PROXY
+                  - 307 TEMPORARY_REDIRECT
+                  - 308 PERMANENT_REDIRECT
+                  - 400 BAD_REQUEST
+                  - 401 UNAUTHORIZED
+                  - 402 PAYMENT_REQUIRED
+                  - 403 FORBIDDEN
+                  - 404 NOT_FOUND
+                  - 405 METHOD_NOT_ALLOWED
+                  - 406 NOT_ACCEPTABLE
+                  - 407 PROXY_AUTHENTICATION_REQUIRED
+                  - 408 REQUEST_TIMEOUT
+                  - 409 CONFLICT
+                  - 410 GONE
+                  - 411 LENGTH_REQUIRED
+                  - 412 PRECONDITION_FAILED
+                  - 413 PAYLOAD_TOO_LARGE
+                  - 413 REQUEST_ENTITY_TOO_LARGE
+                  - 414 URI_TOO_LONG
+                  - 414 REQUEST_URI_TOO_LONG
+                  - 415 UNSUPPORTED_MEDIA_TYPE
+                  - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+                  - 417 EXPECTATION_FAILED
+                  - 418 I_AM_A_TEAPOT
+                  - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+                  - 420 METHOD_FAILURE
+                  - 421 DESTINATION_LOCKED
+                  - 422 UNPROCESSABLE_ENTITY
+                  - 423 LOCKED
+                  - 424 FAILED_DEPENDENCY
+                  - 425 TOO_EARLY
+                  - 426 UPGRADE_REQUIRED
+                  - 428 PRECONDITION_REQUIRED
+                  - 429 TOO_MANY_REQUESTS
+                  - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+                  - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+                  - 500 INTERNAL_SERVER_ERROR
+                  - 501 NOT_IMPLEMENTED
+                  - 502 BAD_GATEWAY
+                  - 503 SERVICE_UNAVAILABLE
+                  - 504 GATEWAY_TIMEOUT
+                  - 505 HTTP_VERSION_NOT_SUPPORTED
+                  - 506 VARIANT_ALSO_NEGOTIATES
+                  - 507 INSUFFICIENT_STORAGE
+                  - 508 LOOP_DETECTED
+                  - 509 BANDWIDTH_LIMIT_EXCEEDED
+                  - 510 NOT_EXTENDED
+                  - 511 NETWORK_AUTHENTICATION_REQUIRED
+  /api/tags/proofs:
+    get:
+      tags:
+        - tag-controller
+      operationId: getAllTagsByProofId
+      parameters:
+        - name: proofId
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tag'
+    post:
+      tags:
+        - tag-controller
+      operationId: addTag
+      parameters:
+        - name: proofId
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: tagId
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Tag'
+    delete:
+      tags:
+        - tag-controller
+      operationId: deleteTagFromProof
+      parameters:
+        - name: proofId
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: tagId
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+                enum:
+                  - 100 CONTINUE
+                  - 101 SWITCHING_PROTOCOLS
+                  - 102 PROCESSING
+                  - 103 EARLY_HINTS
+                  - 103 CHECKPOINT
+                  - 200 OK
+                  - 201 CREATED
+                  - 202 ACCEPTED
+                  - 203 NON_AUTHORITATIVE_INFORMATION
+                  - 204 NO_CONTENT
+                  - 205 RESET_CONTENT
+                  - 206 PARTIAL_CONTENT
+                  - 207 MULTI_STATUS
+                  - 208 ALREADY_REPORTED
+                  - 226 IM_USED
+                  - 300 MULTIPLE_CHOICES
+                  - 301 MOVED_PERMANENTLY
+                  - 302 FOUND
+                  - 302 MOVED_TEMPORARILY
+                  - 303 SEE_OTHER
+                  - 304 NOT_MODIFIED
+                  - 305 USE_PROXY
+                  - 307 TEMPORARY_REDIRECT
+                  - 308 PERMANENT_REDIRECT
+                  - 400 BAD_REQUEST
+                  - 401 UNAUTHORIZED
+                  - 402 PAYMENT_REQUIRED
+                  - 403 FORBIDDEN
+                  - 404 NOT_FOUND
+                  - 405 METHOD_NOT_ALLOWED
+                  - 406 NOT_ACCEPTABLE
+                  - 407 PROXY_AUTHENTICATION_REQUIRED
+                  - 408 REQUEST_TIMEOUT
+                  - 409 CONFLICT
+                  - 410 GONE
+                  - 411 LENGTH_REQUIRED
+                  - 412 PRECONDITION_FAILED
+                  - 413 PAYLOAD_TOO_LARGE
+                  - 413 REQUEST_ENTITY_TOO_LARGE
+                  - 414 URI_TOO_LONG
+                  - 414 REQUEST_URI_TOO_LONG
+                  - 415 UNSUPPORTED_MEDIA_TYPE
+                  - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+                  - 417 EXPECTATION_FAILED
+                  - 418 I_AM_A_TEAPOT
+                  - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+                  - 420 METHOD_FAILURE
+                  - 421 DESTINATION_LOCKED
+                  - 422 UNPROCESSABLE_ENTITY
+                  - 423 LOCKED
+                  - 424 FAILED_DEPENDENCY
+                  - 425 TOO_EARLY
+                  - 426 UPGRADE_REQUIRED
+                  - 428 PRECONDITION_REQUIRED
+                  - 429 TOO_MANY_REQUESTS
+                  - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+                  - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+                  - 500 INTERNAL_SERVER_ERROR
+                  - 501 NOT_IMPLEMENTED
+                  - 502 BAD_GATEWAY
+                  - 503 SERVICE_UNAVAILABLE
+                  - 504 GATEWAY_TIMEOUT
+                  - 505 HTTP_VERSION_NOT_SUPPORTED
+                  - 506 VARIANT_ALSO_NEGOTIATES
+                  - 507 INSUFFICIENT_STORAGE
+                  - 508 LOOP_DETECTED
+                  - 509 BANDWIDTH_LIMIT_EXCEEDED
+                  - 510 NOT_EXTENDED
+                  - 511 NETWORK_AUTHENTICATION_REQUIRED
+  /api/auth/signup:
+    post:
+      tags:
+        - auth-controller
+      operationId: registerUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignupRequest'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/auth/signin:
+    post:
+      tags:
+        - auth-controller
+      operationId: authenticateUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/test/user:
+    get:
+      tags:
+        - test-controller
+      operationId: userAccess
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/test/mod:
+    get:
+      tags:
+        - test-controller
+      operationId: moderatorAccess
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/test/all:
+    get:
+      tags:
+        - test-controller
+      operationId: allAccess
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/test/admin:
+    get:
+      tags:
+        - test-controller
+      operationId: adminAccess
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/sins/published:
+    get:
+      tags:
+        - sin-controller
+      operationId: findByPublished
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sin'
+  /api/proofs/tags:
+    get:
+      tags:
+        - proof-controller
+      operationId: getAllProofsByTagId
+      parameters:
+        - name: tagId
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Proof'
+  /api/accounts:
+    get:
+      tags:
+        - account-controller
+      operationId: getAllAccounts
+      parameters:
+        - name: username
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+components:
+  schemas:
+    ErrorMessage:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          format: int32
+        timestamp:
+          type: string
+          format: date-time
+        message:
+          type: string
+        description:
+          type: string
+    Tag:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+    Sin:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        title:
+          type: string
+        description:
+          type: string
+        published:
+          type: boolean
+    Account:
+      required:
+        - email
+        - password
+        - username
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        username:
+          maxLength: 20
+          minLength: 0
+          type: string
+        email:
+          maxLength: 50
+          minLength: 0
+          type: string
+        password:
+          maxLength: 120
+          minLength: 0
+          type: string
+          writeOnly: true
+        roles:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+    Proof:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        title:
+          type: string
+        link:
+          type: string
+        tags:
+          uniqueItems: true
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Tag'
+        account:
+          $ref: '#/components/schemas/Account'
+        sin:
+          $ref: '#/components/schemas/Sin'
+    Role:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          enum:
+            - ROLE_USER
+            - ROLE_MODERATOR
+            - ROLE_ADMIN
+    Comment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        text:
+          type: string
+        rating:
+          type: integer
+          format: int32
+          readOnly: true
+        proof:
+          $ref: '#/components/schemas/Proof'
+    SignupRequest:
+      required:
+        - email
+        - password
+        - username
+      type: object
+      properties:
+        username:
+          maxLength: 20
+          minLength: 3
+          type: string
+        email:
+          maxLength: 50
+          minLength: 0
+          type: string
+        role:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        password:
+          maxLength: 40
+          minLength: 6
+          type: string
+    LoginRequest:
+      required:
+        - password
+        - username
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string

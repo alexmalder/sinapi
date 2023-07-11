@@ -33,3 +33,4 @@ build/
 /.vscode/
 /gradlew
 /.gradle
+/tmp
